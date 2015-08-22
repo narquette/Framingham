@@ -129,23 +129,35 @@ calcRisk = function(AGE, SEX, TOTCHOL, HDLC, SYSBP, CURSMOKE, riskTable){
 #   )
 # )
 
+# absolutePanel(
+#   top=20, right=20, width=200,
+#   radioButtons("sex", label=h6("Gender"), choices=list("Male"=1, "Female"=2),selected=1),
+#   sliderInput("age", label=h6("Age"), min=30, max=75, value=50),
+#   sliderInput("totchol", label=h6("Total Cholesterol"), min=100, max=600, value=175),
+#   sliderInput("hdl", label=h6("HDL Cholesterol"), min=10, max=200, value=35),
+#   sliderInput("sysbp", label=h6("Systolic Blood Pressure"), min=80, max=300, value=120),
+#   checkboxInput("smoke", label="Current Smoker", value=F),
+#   style = "opacity: 0.92"
+  
+
 
 ui = fluidPage(
   titlePanel("Risk of Heart Attack within 10 years - Density Distribution (Framingham Study Population)"),
-  absolutePanel(
-    top=20, right=20, width=200,
-    draggable=T,
-    radioButtons("sex", label=h6("Gender"), choices=list("Male"=1, "Female"=2),selected=1),
-    sliderInput("age", label=h6("Age"), min=30, max=75, value=50),
-    sliderInput("totchol", label=h6("Total Cholesterol"), min=100, max=600, value=175),
-    sliderInput("hdl", label=h6("HDL Cholesterol"), min=10, max=200, value=35),
-    sliderInput("sysbp", label=h6("Systolic Blood Pressure"), min=80, max=300, value=120),
-    checkboxInput("smoke", label="Current Smoker", value=F),
-    style = "opacity: 0.92"
-    
-  ),
-  plotOutput("plot", height="40em"),
-  hr()
+  
+  sidebarLayout(
+  
+    sidebarPanel( width=2,
+      radioButtons("sex", label=h5("Gender"), choices=list("Male"=1, "Female"=2),selected=1),
+      sliderInput("age", label=h5("Age"), min=30, max=75, value=50),
+      sliderInput("totchol", label=h5("Total Cholesterol"), min=100, max=600, value=175),
+      sliderInput("hdl", label=h5("HDL Cholesterol"), min=10, max=200, value=35),
+      sliderInput("sysbp", label=h5("Systolic Blood Pressure"), min=80, max=300, value=120),
+      checkboxInput("smoke", label="Current Smoker", value=F)
+
+   ),
+    mainPanel("", plotOutput("plot", height=700))  
+  )
+  )
   
 #   fluidRow(
 #     
@@ -166,11 +178,6 @@ ui = fluidPage(
 #            )
   # )
   
-  
-  
-  
-  
-)
   
 server <- function(input, output) {
   
